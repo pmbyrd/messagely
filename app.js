@@ -20,11 +20,11 @@ app.use(authenticateJWT);
 
 /** routes */
 
-// const authRoutes = require("./routes/auth");
+const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
 const messageRoutes = require("./routes/messages");
 
-// app.use("/auth", authRoutes);
+app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/messages", messageRoutes);
 

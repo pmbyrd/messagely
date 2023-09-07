@@ -39,7 +39,7 @@ class User {
 			const result = await db.query(
 				`INSERT INTO users (username, password, first_name, last_name, phone, join_at, last_login_at)
 			VALUES ($1, $2, $3, $4, $5, current_timestamp, current_timestamp)
-			RETURNING username, password, first_name, last_name, phone`,
+			RETURNING username, first_name, last_name, phone`,
 				[username, hashedPassword, first_name, last_name, phone]
 			);
 			return new User(result.rows[0]);

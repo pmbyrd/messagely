@@ -24,7 +24,7 @@ router.get('/', async (req, res, next) => {
  * => {user: {username, first_name, last_name, phone, join_at, last_login_at}}
  *
  **/
-router.get('/:username', async (req, res, next) => {
+router.get('/:username', ensureCorrectUser, async (req, res, next) => {
     try {
         const user = await User.get(req.params.username);
         return res.json({ user });
@@ -71,5 +71,7 @@ router.get('/:username/from', async (req, res, next) => {
         return next(error);
     }
 });
+
+
 
 module.exports = router;
