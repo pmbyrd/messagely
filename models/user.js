@@ -144,8 +144,21 @@ class User {
 				FROM messages AS m
 				JOIN users AS u ON m.to_username = u.username
 				WHERE m.from_username = $1`,
-			   [username]
-			)			
+				[username]
+			)
+			let messages = result.rows.map(m => ({
+				id: m.id,
+				to_user: {
+					username: m.username,
+					first_name: m.first_name,
+					last_name: m.last_name,
+					phone: m.phone,
+				},
+				body: m.body,
+				sent_at: m.sent_at,
+				read_at: m.read_at,
+			}));
+			return messages;
 		} catch (error) {
 			throw new Error(`Error fetching messages from user: ${error.message}`);
 		}
@@ -167,7 +180,20 @@ class User {
 				JOIN users AS u ON m.from_username = u.username
 				WHERE m.to_username = $1`,
 			   [username]
-			)			
+			)		
+			let messages = result.rows.map(m => ({
+				id: m.id,
+				from_user: {
+					username: m.username,
+					first_name: m.first_name,
+					last_name: m.last_name,
+					phone: m.phone,
+				},
+				body: m.body,
+				sent_at: m.sent_at,
+				read_at: m.read_at,
+			}));
+			return messages;	
 		} catch (error) {
 			throw new Error(`Error fetching messages to user: ${error.message}`);
 		}
